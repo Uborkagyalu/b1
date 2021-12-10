@@ -1,7 +1,7 @@
 import City from "./City";
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {setMainState, setSelectedCity, addcity} from '../actions';
+import {setMainState} from '../actions';
 
 const Main = (props) => {
 

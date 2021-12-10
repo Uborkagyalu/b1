@@ -1,6 +1,6 @@
 import Clock from './Clock';
 import { useSelector, useDispatch } from 'react-redux';
-import {setMainState, setSelectedCity, addcity} from '../actions';
+import {setMainState} from '../actions';
 
 const Page3 = (props) => {
 

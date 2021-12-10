@@ -1,10 +1,10 @@
-import citylist from '../weatherAPIcities/citylist.js';
+import citylist from '../weatherAPIcities/capitals.js';
 import Autocomplete from '@mui/material/Autocomplete';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import TextField from '@mui/material/TextField';
 import { useSelector, useDispatch } from 'react-redux';
-import {setMainState, setSelectedCity, addcity} from '../actions';
+import {setMainState, addcity} from '../actions';
 import { useState } from 'react';
 
 const Page2 = (props) => {
@@ -16,10 +16,13 @@ const Page2 = (props) => {
 
   //function for an array of city names that are not currently in the store (not allowing to select same city twice)
   const getfilteredCityList = () => {
-    const filteredArray = citylist;
+    var filteredArray = [];
+    citylist.map((city) => {
+      return filteredArray.push(city.name);
+    });
     cities.map((selectedcity) => {
       return filteredArray.splice(citylist.findIndex((city) => {
-        return city === selectedcity.name;
+        return city.name === selectedcity.name;
       }), 1);
     });
     return filteredArray;
