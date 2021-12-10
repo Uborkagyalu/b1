@@ -1,17 +1,12 @@
 import City from "./City";
 import React from 'react';
-import { useSelector } from 'react-redux';
-
-const selectedCities = state => state.cityList;
+import { useSelector, useDispatch } from 'react-redux';
+import {setMainState, setSelectedCity, addcity} from '../actions';
 
 const Main = (props) => {
 
-  //get cities from redux store
-  const cities = useSelector(selectedCities);
-
-  const addButtonHandler = () => {
-    props.setMainState("Page2");
-  }
+  const cities = useSelector(state => state.cityList);
+  const dispatch = useDispatch();
 
   return (
     <div className="main page">
@@ -22,14 +17,12 @@ const Main = (props) => {
           return (<City
             key={index}
             city={city}
-            setSelectedCity={props.setSelectedCity}
-            setMainState={props.setMainState}
           ></City>)
         })}
 
       </div>
       <div>
-        <img className="addButton" src={require("../img/add.png").default} alt="+" onClick={addButtonHandler}/>
+        <img className="addButton" src={require("../img/add.png").default} alt="+" onClick={()=>dispatch(setMainState("Page2"))}/>
       </div>
     </div>
   );

@@ -3,16 +3,16 @@ import Autocomplete from '@mui/material/Autocomplete';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
 import TextField from '@mui/material/TextField';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {setMainState, setSelectedCity, addcity} from '../actions';
 import { useState } from 'react';
-
-const selectedCities = state => state.cityList;
 
 const Page2 = (props) => {
 
   const [inputvalue, setInputvalue] = useState("");
-  //get cities from redux store
-  const cities = useSelector(selectedCities);
+
+  const cities = useSelector(state => state.cityList);
+  const dispatch = useDispatch();
 
   //function for an array of city names that are not currently in the store (not allowing to select same city twice)
   const getfilteredCityList = () => {
@@ -28,13 +28,9 @@ const Page2 = (props) => {
   const saveClickHandler = () => {
     var value = document.getElementById("citySelection").value;
     if (value !== "") {
-      props.addCityFunc(value);
-      props.setMainState("main");
+      dispatch(addcity(value));
+      dispatch(setMainState("main"));
     }
-  }
-
-  const backButtonHandler = () => {
-    props.setMainState("main");
   }
 
   //compromise solution since onchange event cannot get input field value to store in state
@@ -50,7 +46,7 @@ const Page2 = (props) => {
 
   return (
     <div className="page">
-      <img className="backButton" src={require("../img/down-arrow.png").default} alt="+" onClick={backButtonHandler} />
+      <img className="backButton" src={require("../img/down-arrow.png").default} alt="+" onClick={()=>dispatch(setMainState("main"))} />
       {// autocomplete module from Mui
       }
       <Autocomplete

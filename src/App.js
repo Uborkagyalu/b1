@@ -5,45 +5,33 @@ import './CSS/weather-icons.css';
 import './CSS/weather-icons.min.css';
 
 import React from 'react';
-import { useState } from 'react';
-
+import { useSelector } from 'react-redux';
 import Main from './components/Main';
 import Page2 from './components/Page2';
 import Page3 from './components/Page3';
 
 function App(props) {
-  //mainstate for main display
-  const [mainState, setMainState] = useState("main");
-  //api fetch result when city is selected
-  const [selectedCity, setSelectedCity] = useState("");
+
+  const mainState = useSelector(state => state.mainState);
 
   //switch determining what to display based on mainState
   switch (mainState) {
     case "main":
       return (
-        <Main
-          setMainState={setMainState}
-          setSelectedCity={setSelectedCity}
-        ></Main>
+        <Main></Main>
       );
     case "Page2":
       return (
-        <Page2
-          setMainState={setMainState}
-          setSelectedCity={setSelectedCity}
-          addCityFunc={props.addCityFunc}
-        ></Page2>
+        <Page2></Page2>
       );
     case "Page3":
       return (
-        <Page3
-          setMainState={setMainState}
-          selectedCity={selectedCity}
-          setSelectedCity={setSelectedCity}
-        ></Page3>
+        <Page3></Page3>
       );
     default:
-      setMainState("main");
+      return (
+        <Main></Main>
+      );
   }
 }
 

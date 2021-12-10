@@ -1,10 +1,11 @@
 import Clock from './Clock';
+import { useSelector, useDispatch } from 'react-redux';
+import {setMainState, setSelectedCity, addcity} from '../actions';
 
 const Page3 = (props) => {
 
-  const backButtonHandler = () => {
-    props.setMainState("main");
-  }
+  const selectedCity = useSelector(state => state.selectedCity);
+  const dispatch = useDispatch();
 
   //constant object to link openWeatherApi weather descriptions with weather icons
   const iconMap = {
@@ -56,19 +57,19 @@ const Page3 = (props) => {
 
   return (
     <div className="page">
-      <img className="backButton" src={require("../img/down-arrow.png").default} alt="+" onClick={backButtonHandler} />
+      <img className="backButton" src={require("../img/down-arrow.png").default} alt="+" onClick={()=>dispatch(setMainState("main"))} />
       <div className="page3infobox">
-        <Clock timezone={props.selectedCity.timezone}></Clock>
-        <div className="page3city">{props.selectedCity.name}</div>
+        <Clock timezone={selectedCity.timezone}></Clock>
+        <div className="page3city">{selectedCity.name}</div>
         {//main weather icon displayed based on iconMap object, weather it is day or night and the weather api weather description
         }
-        <i className={`page3icon wi ${iconMap[dayornight()][props.selectedCity.weather[0].main]}`}></i>
-        <div className="page3text">{props.selectedCity.weather[0].description}</div>
+        <i className={`page3icon wi ${iconMap[dayornight()][selectedCity.weather[0].main]}`}></i>
+        <div className="page3text">{selectedCity.weather[0].description}</div>
         <div className="page3databox">
           <div className="iconcont">
             <i className="wi wi-thermometer"></i>
           </div>
-          <div>{Math.round(props.selectedCity.main.temp)} <i className="wi wi-celsius"></i></div>
+          <div>{Math.round(selectedCity.main.temp)} <i className="wi wi-celsius"></i></div>
         </div>
         <div className="page3databox">
           <div className="iconcont">
@@ -77,9 +78,9 @@ const Page3 = (props) => {
           <div>
             {//displaying hours and minutes and adding 0 if it's for example 9am to get 09am etc.
             }
-            {new Date(props.selectedCity.sys.sunrise * 1000).getHours() < 10 ? "0" + new Date(props.selectedCity.sys.sunrise * 1000).getHours() : new Date(props.selectedCity.sys.sunrise * 1000).getHours()}
+            {new Date(selectedCity.sys.sunrise * 1000).getHours() < 10 ? "0" + new Date(selectedCity.sys.sunrise * 1000).getHours() : new Date(selectedCity.sys.sunrise * 1000).getHours()}
             :
-            {new Date(props.selectedCity.sys.sunrise * 1000).getMinutes() < 10 ? "0" + new Date(props.selectedCity.sys.sunrise * 1000).getMinutes() : new Date(props.selectedCity.sys.sunrise * 1000).getMinutes()}
+            {new Date(selectedCity.sys.sunrise * 1000).getMinutes() < 10 ? "0" + new Date(selectedCity.sys.sunrise * 1000).getMinutes() : new Date(selectedCity.sys.sunrise * 1000).getMinutes()}
           </div>
         </div>
         <div className="page3databox">
@@ -87,9 +88,9 @@ const Page3 = (props) => {
             <i className="wi wi-sunset"></i>
           </div>
           <div>
-            {new Date(props.selectedCity.sys.sunset * 1000).getHours() < 10 ? "0" + new Date(props.selectedCity.sys.sunset * 1000).getHours() : new Date(props.selectedCity.sys.sunset * 1000).getHours()}
+            {new Date(selectedCity.sys.sunset * 1000).getHours() < 10 ? "0" + new Date(selectedCity.sys.sunset * 1000).getHours() : new Date(selectedCity.sys.sunset * 1000).getHours()}
             :
-            {new Date(props.selectedCity.sys.sunset * 1000).getMinutes() < 10 ? "0" + new Date(props.selectedCity.sys.sunset * 1000).getMinutes() : new Date(props.selectedCity.sys.sunset * 1000).getMinutes()}
+            {new Date(selectedCity.sys.sunset * 1000).getMinutes() < 10 ? "0" + new Date(selectedCity.sys.sunset * 1000).getMinutes() : new Date(selectedCity.sys.sunset * 1000).getMinutes()}
           </div>
         </div>
       </div>
