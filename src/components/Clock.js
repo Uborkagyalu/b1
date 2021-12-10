@@ -18,9 +18,9 @@ function Clock(props){
   return (
     <span className="clock">
         {//displaying hours and minutes and adding 0 if it's for example 9am to get 09am etc.
-        //also displaying time based on timezone (originating from (GMT+1))
+        //also displaying time based on timezone
         }
-      {date.getHours()-(3600/60/60)+(props.timezone/60/60) < 10 ? "0"+date.getHours()-(3600/60/60)+(props.timezone/60/60) : date.getHours()-(3600/60/60)+(props.timezone/60/60)}
+      {date.getUTCHours()+(props.timezone/60/60) < 10 ? "0"+date.getUTCHours()+(props.timezone/60/60) : date.getUTCHours()+(props.timezone/60/60)}
       :
       {date.getMinutes()<10 ? "0"+date.getMinutes() : date.getMinutes()}
     </span>
