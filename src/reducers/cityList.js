@@ -1,6 +1,8 @@
+import states from '../states';
+
 const cityListReducer = (state = JSON.parse(localStorage.getItem("localCityList")) || [{name: "Budapest"}], action) => {
     switch(action.type) {
-        case 'addcity': {
+        case states.addcity: {
             state = [...state, {name: action.target}];
             localStorage.setItem("localCityList", JSON.stringify(state));
             return state;

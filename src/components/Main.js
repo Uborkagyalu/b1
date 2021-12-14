@@ -2,6 +2,8 @@ import City from "./City";
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {setMainState} from '../actions';
+import addimage from '../img/add.png';
+import nav from '../nav';
 
 const Main = (props) => {
 
@@ -11,18 +13,16 @@ const Main = (props) => {
   return (
     <div className="main page">
       <div className="cityCont">
-        {
-        //map trough cities from store and display a city component for each
-        cities.map((city, index) => {
+        {cities.map((city) => {
           return (<City
-            key={index}
+            key={city.name}
             city={city}
           ></City>)
         })}
 
       </div>
       <div>
-        <img className="addButton" src={require("../img/add.png").default} alt="+" onClick={()=>dispatch(setMainState("Page2"))}/>
+        <img className="addButton" src={addimage} alt="+" onClick={()=>dispatch(setMainState(nav.Page2))}/>
       </div>
     </div>
   );

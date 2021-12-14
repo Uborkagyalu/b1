@@ -1,8 +1,7 @@
 import './App.css';
-import './CSS/weather-icons-wind.css';
-import './CSS/weather-icons-wind.min.css';
+
 import './CSS/weather-icons.css';
-import './CSS/weather-icons.min.css';
+import nav from './nav';
 
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -13,18 +12,17 @@ import Page3 from './components/Page3';
 function App(props) {
 
   const mainState = useSelector(state => state.mainState);
-
-  //switch determining what to display based on mainState
+  
   switch (mainState) {
-    case "main":
+    case nav.main:
       return (
         <Main></Main>
       );
-    case "Page2":
+    case nav.Page2:
       return (
         <Page2></Page2>
       );
-    case "Page3":
+    case nav.Page3:
       return (
         <Page3></Page3>
       );

@@ -1,4 +1,4 @@
-import citylist from '../weatherAPIcities/capitals.js';
+import capitals from '../weatherAPIcities/capitals.js';
 import Autocomplete from '@mui/material/Autocomplete';
 import parse from 'autosuggest-highlight/parse';
 import match from 'autosuggest-highlight/match';
@@ -6,6 +6,8 @@ import TextField from '@mui/material/TextField';
 import { useSelector, useDispatch } from 'react-redux';
 import {setMainState, addcity} from '../actions';
 import { useState } from 'react';
+import arrowimage from '../img/down-arrow.png';
+import nav from '../nav';
 
 const Page2 = (props) => {
 
@@ -14,44 +16,28 @@ const Page2 = (props) => {
   const cities = useSelector(state => state.cityList);
   const dispatch = useDispatch();
 
-  //function for an array of city names that are not currently in the store (not allowing to select same city twice)
   const getfilteredCityList = () => {
-    var filteredArray = [];
-    citylist.map((city) => {
-      return filteredArray.push(city.name);
-    });
-    cities.map((selectedcity) => {
-      return filteredArray.splice(citylist.findIndex((city) => {
-        return city.name === selectedcity.name;
-      }), 1);
-    });
-    return filteredArray;
-  }
+      
+      let filteredArray = capitals.map((city) => city.name);
+      return filteredArray.filter((city) => {
+        return !cities.find((selectedCity) => selectedCity.name === city);
+      });
+    }
 
   const saveClickHandler = () => {
-    var value = document.getElementById("citySelection").value;
-    if (value !== "") {
-      dispatch(addcity(value));
-      dispatch(setMainState("main"));
+    if (inputvalue !== "") {
+      dispatch(addcity(inputvalue));
+      dispatch(setMainState(nav.main));
     }
   }
 
-  //compromise solution since onchange event cannot get input field value to store in state
-  const inputChangeHandler = (e) => {
-    var value = "";
-    if(e.target.innerHTML.includes("path")){
-      value = "";
-    } else {
-      value = e.target.innerHTML;
-    }
+  const inputChangeHandler = (e, value) => {
     setInputvalue(value);
   }
 
   return (
     <div className="page">
-      <img className="backButton" src={require("../img/down-arrow.png").default} alt="+" onClick={()=>dispatch(setMainState("main"))} />
-      {// autocomplete module from Mui
-      }
+      <img className="backButton" src={arrowimage} alt="+" onClick={()=>dispatch(setMainState("main"))} />
       <Autocomplete
         onChange={inputChangeHandler}
         id="citySelection"
@@ -61,7 +47,6 @@ const Page2 = (props) => {
           <TextField {...params} />
         )}
         renderOption={(params, option, { inputValue }) => {
-          //highlight typed text based on autosuggest-highlight module
           const matches = match(option, inputValue);
           const parts = parse(option, matches);
 
@@ -81,8 +66,6 @@ const Page2 = (props) => {
           );
         }}
       />
-      {//state conditional className to display or hide save button
-      }
       <div className={`saveButton button ${inputvalue === "" ? 'displayNone' : ""}`} id="saveButton" onClick={saveClickHandler}>Save</div>
     </div>
 
